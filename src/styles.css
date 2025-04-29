@@ -1,0 +1,52 @@
+@config "../tailwind.config.ts";
+@import "tailwindcss";
+@plugin "tailwindcss-primeui";
+@import "primeicons/primeicons.css";
+
+@layer base {
+  :root {
+    --background: 240 17% 14%;
+    --foreground: 0 0% 95%;
+
+    --card: 240 17% 18%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 240 17% 18%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 255 80% 75%;
+    --primary-foreground: 240 17% 14%;
+
+    --secondary: 260 33% 54%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 240 10% 25%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 260 33% 54%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 240 10% 25%;
+    --input: 240 10% 25%;
+    --ring: 255 80% 75%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    background-image: radial-gradient(
+      rgba(155, 135, 245, 0.05) 1px,
+      transparent 1px
+    );
+    background-size: 30px 30px;
+    height: 100vh;
+  }
+}
+

@@ -1,0 +1,68 @@
+<main class="flex-1 container pt-8 pb-16 px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col items-center text-center max-w-3xl mx-auto py-12">
+    <div
+      class="w-20 h-20 rounded-full bg-web3-gradient flex items-center justify-center mb-6"
+    >
+      <i class="pi pi-wallet" style="font-size: 2rem"></i>
+    </div>
+
+    <h1
+      class="text-4xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-web3-gradient"
+    >
+      Web3Aluguel: Pagamento de Aluguel na Web3
+    </h1>
+
+    <p class="text-xl text-muted-foreground mb-8">
+      Bem-vindo ao futuro dos contratos de alugueis. Contratos de alugueis
+      seguros, transparentes e descentralizados, impulsionados pela tecnologia
+      blockchain.
+    </p>
+
+    <button
+      (click)="connectWallet()"
+      class="rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 active:scale-95 px-6 py-3 text-lg bg-web3-gradient text-white shadow-md hover:shadow-lg cursor-pointer"
+      [disabled]="isLoading"
+      >
+      <span *ngIf="!isLoading else loading">
+        Conectar Carteira
+      </span>
+
+      <ng-template #loading>
+        <i class="pi pi-spin pi-spinner mr-2"></i>
+        Conectando...
+      </ng-template>
+
+    </button>
+
+  </div>
+
+  <section class="py-12">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl font-bold tracking-tight mb-4">
+        Por que usar a Web3Aluguel?
+      </h2>
+      <p class="text-muted-foreground max-w-2xl mx-auto">
+        Nossa plataforma de aluguel com tecnologia blockchain oferece benefícios
+        tanto para proprietários quanto para inquilinos.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-24">
+      <app-info-card
+        icone="pi-shield"
+        titulo="Seguro e a Prova de Adulteração"
+        descricao="Todos os contratos são protegidos pela tecnologia blockchain, o que os torna imutáveis ​​e invioláveis."
+      ></app-info-card>
+      <app-info-card
+        icone="pi-server"
+        titulo="Descentralizado"
+        descricao="Nenhuma autoridade central controla seus dados ou fundos. Transações diretas de ponta a ponta."
+      ></app-info-card>
+      <app-info-card
+        icone="pi-lightbulb"
+        titulo="Transparente"
+        descricao="Todas as transações são transparentes e verificáveis na blockchain."
+      ></app-info-card>
+    </div>
+  </section>
+</main>

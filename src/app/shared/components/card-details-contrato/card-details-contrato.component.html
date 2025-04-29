@@ -1,0 +1,202 @@
+<!-- Modal -->
+<div class="card flex justify-center">
+  <p-dialog
+    header="Detalhes do Contrato"
+    [(visible)]="visible"
+    (onHide)="closeModal()"
+    styleClass="!border-[#393945] !bg-[#1F1E2A]"
+    maskStyleClass="backdrop-blur-sm"
+    [style]="{ width: 'auto', color: 'white' }"
+  >
+    <div class="flex flex-col max-w-[540px] gap-3">
+      <ng-container *ngIf="fullContract; else loading">
+        <div class="flex gap-3 border-b border-[#3A3846] pb-3">
+          <div class="flex flex-col gap-1">
+            <h4 class="text-base font-medium">Nome Locador</h4>
+            <span class="text-sm w-60 text-muted-foreground break-all">{{
+              fullContract.nomeLocador
+            }}</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <h4 class="text-base font-medium">Endereço Locador</h4>
+            <span class="text-sm w-60 text-muted-foreground break-all">{{
+              fullContract.locador
+            }}</span>
+          </div>
+        </div>
+
+        <div class="flex gap-3 border-b border-[#3A3846] pb-3">
+          <div class="flex flex-col gap-1">
+            <h4 class="text-base font-medium">Nome Locatário</h4>
+            <span class="text-sm w-60 text-muted-foreground break-all">{{
+              fullContract.nomeLocatario
+            }}</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <h4 class="text-base font-medium">Endereço Locatário</h4>
+            <span class="text-sm w-60 text-muted-foreground break-all">{{
+              fullContract.locatario
+            }}</span>
+          </div>
+        </div>
+
+        <section class="flex flex-col gap-3 border-b border-[#3A3846] pb-3">
+          <div class="flex gap-2">
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Valor Mensal</h4>
+              <span class="text-sm w-60 text-muted-foreground break-all"
+                >{{ fullContract.valorMensal }} ETH</span
+              >
+            </div>
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Duração em meses</h4>
+              <span class="text-sm w-60 text-muted-foreground break-all">{{
+                fullContract.duracaoMeses
+              }}</span>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Data de início</h4>
+              <span class="text-sm w-60 text-muted-foreground break-all">
+                {{ fullContract.dataInicio }}
+              </span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Próxima Data de Vencimento</h4>
+              <span class="text-sm w-60 text-muted-foreground break-all">{{
+                fullContract.proximoVencimento
+              }}</span>
+            </div>
+          </div>
+
+          <div *ngIf="fullContract.datasDePagamento.length > 0" class="flex gap-2">
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Datas de Pagamento</h4>
+              <span *ngFor="let datas of fullContract.datasDePagamento" class="text-sm w-60 text-muted-foreground break-all">{{
+                datas
+              }}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="flex flex-col gap-3 pb-3">
+          <div class="flex gap-2">
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Pagamentos Efetuados</h4>
+              <span class="text-sm w-60 text-muted-foreground break-all">
+                {{ fullContract.pagamentosRealizados }}
+              </span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Juros Totais</h4>
+              <span class="text-sm w-60 text-muted-foreground break-all"
+                >{{ fullContract.totalJuros }} ETH</span
+              >
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <div class="flex flex-col gap-1">
+              <h4 class="text-base font-medium">Total em Multas</h4>
+              <span class="text-sm w-60 text-muted-foreground break-all"
+                >{{ fullContract.totalMultas }} ETH</span
+              >
+            </div>
+
+            <div>
+              <h4 class="text-base font-medium">Status</h4>
+              <span
+                [ngClass]="{
+                  'text-sm': true,
+                  ' text-green-500': fullContract.ativo,
+                  ' text-red-500': !fullContract.ativo
+                }"
+              >
+                {{ fullContract.ativo ? "Ativo" : "Inativo" }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <div *ngIf="isLocatario && fullContract.ativo" class="flex justify-end">
+          <button
+            class="flex items-center rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 active:scale-95 px-3 py-2 text-base bg-web3-gradient text-white shadow-md hover:shadow-lg gap-2 cursor-pointer"
+            (click)="showModalConfirmPayment()"
+          >
+            <span *ngIf="!isLoading; else loading">
+              <i class="pi pi-credit-card"></i>
+              Pagar {{ fullContract.valorTotal }} ETH
+            </span>
+
+            <ng-template #loading>
+              <i class="pi pi-spin pi-spinner mr-2"></i>
+              Realizando pagamento...
+            </ng-template>
+          </button>
+        </div>
+
+        <p-dialog
+          header="Confirmar Transação"
+          [(visible)]="visibleConfirmPayment"
+          (onHide)="closeModalConfirmPayment()"
+          styleClass="!border-[#393945] !bg-[#1F1E2A]"
+          maskStyleClass="backdrop-blur-sm"
+          [style]="{ width: 'auto', color: 'white' }"
+        >
+          <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-2">
+              <h4 class="text-base font-medium">
+                Confirme o pagamento do aluguel
+              </h4>
+              <div class="flex flex-col gap-1">
+                <h5>Locador</h5>
+                <span class="text-sm w-60 text-muted-foreground break-all">
+                  {{ fullContract.locador }}
+                </span>
+                <span class="text-sm w-60 text-muted-foreground break-all">
+                  {{ fullContract.nomeLocador }}
+                </span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <h5>Valor Total do Aluguel</h5>
+                <span class="text-sm w-60 text-muted-foreground break-all">
+                  {{ fullContract.valorTotal }} ETH
+                </span>
+              </div>
+            </div>
+            <div class="flex gap-2 justify-end">
+              <p-button
+                label="Cancel"
+                severity="secondary"
+                (click)="closeModalConfirmPayment()"
+              />
+              <p-button
+                (click)="
+                  makePayment(fullContract.contractId ,fullContract.locador, fullContract.valorTotal)
+                "
+                [style]="{ width: 'auto', padding: '8px' }"
+              >
+                <span *ngIf="!isLoading; else loading">
+                  Confirmar
+                </span>
+
+                <ng-template #loading>
+                  <i class="pi pi-spin pi-spinner mr-2"></i>
+                  Realizando pagamento...
+                </ng-template>
+              </p-button>
+            </div>
+          </div>
+        </p-dialog>
+      </ng-container>
+
+      <ng-template #loading>
+        <div class="text-center">
+          <span>Carregando detalhes do contrato...</span>
+        </div>
+      </ng-template>
+    </div>
+  </p-dialog>
+</div>

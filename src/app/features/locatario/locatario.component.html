@@ -1,0 +1,29 @@
+<main class="flex-1 container pt-8 pb-16 px-4 sm:px-6 lg:px-8 min-h-[80vh] relative">
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold tracking-tight">Painel Locatário</h1>
+  </div>
+
+
+  <section *ngIf="!loading else isLoading">
+    <div class="inline-flex justify-center gap-8 p-4 mt-4 flex-wrap" *ngIf="contratos.length > 0 else nenhumContrato">
+      <div *ngFor="let contrato of contratos" >
+        <app-card-info-contrato [contrato]="contrato" (openModalDetails)="openModalDetailsContrato(contrato.id)" ></app-card-info-contrato>
+      </div>
+    </div>
+
+    <ng-template #nenhumContrato>
+      <div class="flex justify-center mt-12">
+        <span class="text-lg font-bold tracking-tight">Nenhum contrato encontrado</span>
+      </div>
+    </ng-template>
+  </section>
+
+  <ng-template #isLoading>
+    <div class="flex justify-center mt-12">
+      <span class="text-lg font-bold tracking-tight">Carregando...</span>
+    </div>
+  </ng-template>
+
+</main>
+
+<app-card-details-contrato (paymentMade)="getContratoLocatario()" [isLocatario]="true" [fullContract]="fullContract" ></app-card-details-contrato>

@@ -1,0 +1,45 @@
+<div
+  class="inline-flex flex-col gap-5 p-4 text-card-foreground bg-card rounded-xl border border-web3-primary/20 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.25),0_0_0_1px_rgba(155,135,245,0.1)] hover:shadow-lg transition-shadow"
+>
+  <div class="flex justify-between items-start gap-4">
+    <div>
+      <h3 class="font-medium truncate" title="{contrato.id}">ID: {{ contrato.id }} </h3>
+    </div>
+    <div
+      [ngClass]="{
+        'text-xs px-2 py-1 rounded-full': true,
+        'bg-green-500/20 text-green-500': contrato.ativo,
+        'bg-red-500/20 text-red-500': !contrato.ativo
+      }"
+    >
+      {{ contrato.ativo ? "Ativo" : "Inativo" }}
+    </div>
+  </div>
+
+  <div className="space-y-2 mb-4">
+    <div className="flex items-center text-sm">
+      <i class="pi pi-calendar mr-2 text-muted-foreground"></i>
+      <span>Vencimento: {{ contrato.dataVencimento }}</span>
+    </div>
+    <div className="flex items-center text-sm">
+      <i class="pi pi-dollar mr-2 text-muted-foreground"></i>
+      <span>{{ contrato.valorMensal }} ETH / mês</span>
+    </div>
+  </div>
+
+  <div class="flex gap-4">
+    <button
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 active:scale-95 px-4 py-2 border border-web3-primary/50 text-web3-primary bg-transparent hover:bg-web3-primary/10 flex-1 cursor-pointer"
+      (click)="onClickOpenModalDetails(contrato.id)"
+      >
+      Ver Mais
+    </button>
+<!--     <button
+      *ngIf="!isLocador"
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-10 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 active:scale-95 px-4 py-2 bg-web3-gradient text-white shadow-md hover:shadow-lg flex-1 cursor-pointer"
+      (click)="onClickMakePayment()"
+      >
+      Pagar Aluguel
+    </button> -->
+  </div>
+</div>

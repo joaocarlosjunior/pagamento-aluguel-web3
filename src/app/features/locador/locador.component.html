@@ -1,0 +1,190 @@
+<main
+  class="flex-1 container pt-8 pb-16 px-4 sm:px-6 lg:px-8 min-h-[80vh] relative"
+>
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold tracking-tight">Painel Locador</h1>
+
+    <button
+      class="flex items-center rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-1 active:scale-95 px-6 py-3 text-lg bg-web3-gradient text-white shadow-md hover:shadow-lg gap-2 cursor-pointer"
+      (click)="onClickCreateContract()"
+    >
+      <i class="pi pi-plus"></i>
+      Criar Contrato
+    </button>
+  </div>
+
+  <section *ngIf="!loading; else isLoading">
+    <div
+      class="inline-flex justify-center gap-8 p-4 mt-4 flex-wrap"
+      *ngIf="contracts.length > 0; else nenhumContrato"
+    >
+      <div *ngFor="let contrato of contracts">
+        <app-card-info-contrato
+          [isLocador]="true"
+          [contrato]="contrato"
+          (openModalDetails)="openModalDetailsContrato($event)"
+        ></app-card-info-contrato>
+      </div>
+    </div>
+
+    <ng-template #nenhumContrato>
+      <div class="flex justify-center mt-12">
+        <span class="text-lg font-bold tracking-tight"
+          >Nenhum contrato encontrado</span
+        >
+      </div>
+    </ng-template>
+  </section>
+
+  <ng-template #isLoading>
+    <div class="flex justify-center mt-12">
+      <span class="text-lg font-bold tracking-tight">Carregando...</span>
+    </div>
+  </ng-template>
+</main>
+
+<!-- Modal -->
+<div class="card flex justify-center">
+  <p-dialog
+    header="Cadastrar contrato aluguel"
+    [(visible)]="visible"
+    (onHide)="closeModal()"
+    styleClass="!border-[#393945] !bg-[#1E1E29]"
+    maskStyleClass="backdrop-blur-sm"
+    [style]="{ width: 'auto', color: 'white' }"
+  >
+    <form
+      class="bg-web3-dark"
+      *ngIf="registerForm"
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="flex flex-row it gap-3">
+        <!-- Nome locador -->
+        <div class="flex flex-col justify-start gap-4 mb-4">
+          <label class="font-semibold">Nome Locador*:</label>
+          <input type="text" pInputText formControlName="nomeLocador" />
+          <span
+            class="text-red-500"
+            *ngIf="registerForm?.get('nomeLocador')?.hasError('required')"
+          >
+            Nome do locador é obrigatório
+          </span>
+        </div>
+        <div class="flex flex-col justify-start gap-4">
+          <span class="font-semibold">Endereço Locador:</span>
+          <span class="w-60 text-muted-foreground break-all">{{
+            currentAccount
+          }}</span>
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <!-- Nome locatario -->
+        <div class="flex flex-col justify-start gap-4 mb-4">
+          <label class="font-semibold">Nome Locatário*:</label>
+          <input
+            type="text"
+            id="address"
+            pInputText
+            formControlName="nomeLocatario"
+          />
+          <span
+            class="text-red-500"
+            *ngIf="registerForm?.get('nomeLocatario')?.hasError('required')"
+          >
+            Nome do locatário é obrigatório
+          </span>
+        </div>
+
+        <!-- Endereço locatario -->
+        <div class="flex flex-col justify-start gap-4 mb-4">
+          <label class="font-semibold">Endereço Locatário*:</label>
+          <input
+            placeholder="0x..."
+            type="text"
+            pInputText
+            formControlName="address"
+          />
+          <span
+            class="text-red-500"
+            *ngIf="registerForm?.get('address')?.hasError('required')"
+          >
+            Endereço do locatário obrigatório
+          </span>
+          <span
+            class="text-red-500"
+            *ngIf="registerForm?.get('address')?.hasError('validator')"
+          >
+            Endereço locatário inválido
+          </span>
+          <span
+            class="text-red-500 w-60 break-all"
+            *ngIf="registerForm?.get('address')?.hasError('addressEqual')"
+          >
+            Endereço do locatário deve ser diferente do seu endereço
+          </span>
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <!-- Valor aluguel em ETHER -->
+        <div class="inline-flex flex-col justify-start gap-4 mb-4">
+          <label class="font-semibold">Valor aluguel(ETH)*:</label>
+          <p-inputnumber
+            type="text"
+            inputId="locale-user"
+            [minFractionDigits]="3"
+            mode="currency"
+            currency="ETH"
+            formControlName="valorMensal"
+          />
+          <span
+            class="text-red-500"
+            *ngIf="registerForm?.get('valorMensal')?.hasError('required')"
+          >
+            Valor mensal é obrigatório
+          </span>
+        </div>
+
+        <!-- Quantidade em meses do aluguel -->
+        <div class="flex flex-col justify-start gap-4 mb-4">
+          <label class="font-semibold">Quantidade mês*:</label>
+          <p-inputnumber inputId="integeronly" formControlName="duracaoMeses" />
+          <span
+            class="text-red-500"
+            *ngIf="registerForm?.get('duracaoMeses')?.hasError('required')"
+          >
+            Quantidade mês é obrigatório
+          </span>
+          <span
+            class="text-red-500"
+            *ngIf="registerForm?.get('duracaoMeses')?.hasError('min')"
+          >
+            Mínimo 1 mês
+          </span>
+        </div>
+      </div>
+
+      <span>*Campos obrigatório</span>
+
+      <div class="flex justify-end gap-2">
+        <p-button
+          label="Cancelar"
+          severity="secondary"
+          (click)="visible = false"
+          [disabled]="registering"
+        />
+        <p-button
+          [disabled]="registerForm.invalid || registering"
+          type="submit"
+          label="{{ registering ? 'Cadastrando...' : 'Cadastrar' }}"
+        />
+      </div>
+    </form>
+  </p-dialog>
+</div>
+
+<app-card-details-contrato
+  [fullContract]="fullContract"
+></app-card-details-contrato>

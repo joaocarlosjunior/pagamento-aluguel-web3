@@ -1,0 +1,436 @@
+[
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "idContrato",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "locador",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "locatario",
+				"type": "address"
+			}
+		],
+		"name": "ContratoCriado",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "idContrato",
+				"type": "uint256"
+			}
+		],
+		"name": "ContratoFinalizado",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "novoIndice",
+				"type": "uint256"
+			}
+		],
+		"name": "IndiceAtualizado",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "idContrato",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "valorBase",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "multa",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "correcao",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "juros",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "totalPago",
+				"type": "uint256"
+			}
+		],
+		"name": "PagamentoEfetuado",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "DENOMINADOR_PERCENTUAL",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "DIAS_NO_MES",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_novoIndice",
+				"type": "uint256"
+			}
+		],
+		"name": "atualizarIndiceCorrecao",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idContrato",
+				"type": "uint256"
+			}
+		],
+		"name": "calcularValorDevido",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "valorBase",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "valorMulta",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "valorCorrecao",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "valorJuros",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "valorTotal",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "locatario",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "valorMensal",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "duracaoMeses",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "nomeLocatario",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "nomeLocador",
+				"type": "string"
+			}
+		],
+		"name": "criarContrato",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_locador",
+				"type": "address"
+			}
+		],
+		"name": "getContratosPorLocador",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "ids",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "datasVencimento",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "ativos",
+				"type": "bool[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "valoresMensal",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_locatario",
+				"type": "address"
+			}
+		],
+		"name": "getContratosPorLocatario",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "ids",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "datasVencimento",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "ativos",
+				"type": "bool[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "valoresMensal",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idContrato",
+				"type": "uint256"
+			}
+		],
+		"name": "getDetalhesContrato",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "nomeLocatario",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "nomeLocador",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "locador",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "locatario",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "valorMensal",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dataInicio",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "duracaoMeses",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "proximoVencimento",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pagamentosRealizados",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "datasDePagamento",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalMultas",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "totalJuros",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "ativo",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct PagamentoAluguel.ContratoAluguel",
+				"name": "",
+				"type": "tuple"
+			},
+			{
+				"internalType": "uint256",
+				"name": "valorTotal",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "indiceCorrecao",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "jurosMensaisPercentual",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "multaAtrasoPercentual",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idContrato",
+				"type": "uint256"
+			}
+		],
+		"name": "pagarAluguel",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	}
+]

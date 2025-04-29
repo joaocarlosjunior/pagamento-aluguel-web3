@@ -1,0 +1,71 @@
+<header
+  class="sticky top-0 z-40 border-b border-border/50 backdrop-blur-md bg-background/80 h-[10vh]"
+>
+  <div
+    class="container flex items-center justify-between h-[100%] px-4 sm:px-6 lg:px-8"
+  >
+    <div class="flex items-center gap-2">
+      <div
+        class="w-8 h-8 rounded-full bg-web3-primary flex items-center justify-center"
+      >
+        <i class="pi pi-wallet"></i>
+      </div>
+      <a
+        routerLink="/home"
+        class="text-lg font-bold text-foreground cursor-pointer"
+      >
+        Web3Aluguel
+      </a>
+    </div>
+
+    <nav *ngIf="showNav" class="hidden md:flex items-center space-x-6">
+      <a
+        class=""
+        routerLink="/main"
+        routerLinkActive="selected"
+        class="cursor-pointer text-lg text-foreground hover:text-web3-primary"
+      >
+      <i class="pi pi-home"></i>
+        Início
+      </a>
+
+      <a
+        routerLink="/locador"
+        routerLinkActive="selected"
+        class="cursor-pointer text-lg  text-foreground hover:text-web3-primary"
+      >
+      <i class="pi pi-user"></i>
+        Locador
+      </a>
+      <a
+        class="h-4 w-4 mr-2 cursor-pointer"
+        routerLink="/locatario"
+        routerLinkActive="selected"
+        class="cursor-pointer text-lg text-foreground hover:text-web3-primary"
+      >
+      <i class="pi pi-users"></i>
+        Locatário
+      </a>
+    </nav>
+
+    <div class="flex flex-col items-center">
+      <div
+        *ngIf="walletConnected; else notConnected"
+        class="flex items-center gap-1 px-3 py-1 rounded-full bg-web3-primary/10 border border-web3-primary/30"
+      >
+        <img src="assets/icons/metamask.svg" height="25" width="25" />
+        <span class="text-sm text-web3-primary truncate w-[10ch]">{{ accountCurrent }}</span>
+
+      </div>
+      <ng-template #notConnected>
+        <div
+          class="flex items-center gap-1 px-3 py-1 rounded-full bg-destructive/10 border border-destructive/30"
+        >
+          <img src="assets/icons/metamask.svg" height="25" width="25" />
+          <span class="text-sm text-destructive">Não conectado</span>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</header>
